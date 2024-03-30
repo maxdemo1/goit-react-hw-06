@@ -1,9 +1,19 @@
 import { useId } from 'react';
 
 import styles from './SearchBox.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { filterSelector } from '../../redux/selectors';
+import { filterContacts } from '../../redux/filterSlice';
 
-const SearchBox = ({ filterUserData, value }) => {
+const SearchBox = () => {
   const searchId = useId();
+  const formValue = useSelector(filterSelector);
+
+  const dispatch = useDispatch();
+
+  const filterUserData = value => {
+    dispatch(filterContacts(value.trim()));
+  };
 
   return (
     <div className={styles.seacrchForm}>
@@ -13,7 +23,7 @@ const SearchBox = ({ filterUserData, value }) => {
         type="text"
         id={searchId}
         onChange={evt => filterUserData(evt.target.value)}
-        value={value}
+        value={formValue}
       />
     </div>
   );

@@ -3,12 +3,16 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FaUserLock } from 'react-icons/fa6';
 import clsx from 'clsx';
+import { useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 
 import styles from './ContactForm.module.css';
 
-const ContactForm = ({ addUser }) => {
+import { addContact } from '../../redux/contactsSlice';
+
+const ContactForm = () => {
   const dataValidationSchema = Yup.object().shape({
-    username: Yup.string()
+    name: Yup.string()
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')
       .required('Required'),
@@ -22,11 +26,18 @@ const ContactForm = ({ addUser }) => {
   const usernameId = useId();
   const phoneNumberId = useId();
 
+  const dispatch = useDispatch();
+  const addUser = (data, actions) => {
+    dispatch(addContact({ ...data, id: nanoid(5) }));
+    actions.resetForm();
+  };
+
   const [visibleSvg, setVisibleSvg] = useState(true);
+
   return (
     <Formik
       initialValues={{
-        username: '',
+        name: '',
         phoneNumber: '',
       }}
       onSubmit={addUser}
@@ -38,7 +49,7 @@ const ContactForm = ({ addUser }) => {
           <div className={styles.inputSvgContainer}>
             <Field
               type="text"
-              name="username"
+              name="name"
               id={usernameId}
               className={clsx(styles.inputField, styles.inputFieldAddition)}
               onFocus={() => {
@@ -55,7 +66,7 @@ const ContactForm = ({ addUser }) => {
             />
           </div>
           <ErrorMessage
-            name="username"
+            name="name"
             render={msg => <span className={styles.formError}>{msg}</span>}
           />
         </div>
