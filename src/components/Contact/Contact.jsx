@@ -11,15 +11,7 @@ const Contact = ({ contactsData }) => {
 
   return contactsData.map(({ id, name, phoneNumber }) => {
     return (
-      <li
-        key={id}
-        className={styles.userItem}
-        onClick={evt => {
-          if (evt.target.nodeName !== 'BUTTON') return;
-
-          dispatch(deleteContact(id));
-        }}
-      >
+      <li key={id} className={styles.userItem}>
         <div>
           <div className={styles.nameContainer}>
             <FaUser />
@@ -31,7 +23,13 @@ const Contact = ({ contactsData }) => {
           </div>
         </div>
 
-        <button type="button" className={styles.deleteButton}>
+        <button
+          type="button"
+          className={styles.deleteButton}
+          onClick={() => {
+            dispatch(deleteContact(id));
+          }}
+        >
           Delete
         </button>
       </li>
