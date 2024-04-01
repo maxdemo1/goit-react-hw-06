@@ -10,7 +10,9 @@ const ContactList = () => {
 
   const visibleContact = (contactsData, filter) => {
     if (filter === '') return contactsData;
-    return contactsData.filter(contact => contact.name.includes(filter));
+    return contactsData.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
   return (
