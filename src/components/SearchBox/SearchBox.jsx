@@ -3,7 +3,7 @@ import { useId } from 'react';
 import styles from './SearchBox.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { filterSelector } from '../../redux/selectors';
-import { filterContacts } from '../../redux/filtersSlice';
+import { changeFilter } from '../../redux/filtersSlice';
 
 const SearchBox = () => {
   const searchId = useId();
@@ -12,7 +12,7 @@ const SearchBox = () => {
   const dispatch = useDispatch();
 
   const filterUserData = value => {
-    dispatch(filterContacts(value.trim().toLowerCase()));
+    dispatch(changeFilter(value.trim().toLowerCase()));
   };
 
   return (

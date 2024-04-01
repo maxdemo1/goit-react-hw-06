@@ -6,35 +6,33 @@ import styles from './Contact.module.css';
 
 import { deleteContact } from '../../redux/contactsSlice';
 
-const Contact = ({ contactsData }) => {
+const Contact = ({ contactData }) => {
   const dispatch = useDispatch();
 
-  return contactsData.map(({ id, name, phoneNumber }) => {
-    return (
-      <li key={id} className={styles.userItem}>
-        <div>
-          <div className={styles.nameContainer}>
-            <FaUser />
-            <p>{name}</p>
-          </div>
-          <div className={styles.phoneContainer}>
-            <FaPhone />
-            <p>{phoneNumber}</p>
-          </div>
+  return (
+    <li className={styles.userItem}>
+      <div>
+        <div className={styles.nameContainer}>
+          <FaUser />
+          <p>{contactData.name}</p>
         </div>
+        <div className={styles.phoneContainer}>
+          <FaPhone />
+          <p>{contactData.phoneNumber}</p>
+        </div>
+      </div>
 
-        <button
-          type="button"
-          className={styles.deleteButton}
-          onClick={() => {
-            dispatch(deleteContact(id));
-          }}
-        >
-          Delete
-        </button>
-      </li>
-    );
-  });
+      <button
+        type="button"
+        className={styles.deleteButton}
+        onClick={() => {
+          dispatch(deleteContact(contactData.id));
+        }}
+      >
+        Delete
+      </button>
+    </li>
+  );
 };
 
 export default Contact;

@@ -17,7 +17,9 @@ const ContactList = () => {
 
   return (
     <ul className={styles.contactsList}>
-      <Contact contactsData={visibleContact(contactsData, filter)} />
+      {visibleContact(contactsData, filter).map(contact => {
+        return <Contact contactData={contact} key={contact.id} />;
+      })}
     </ul>
   );
 };
